@@ -1,4 +1,12 @@
 //1.  Add a 'click' eventlistener to the start button.
+let timelimit = 0;
+let questionsFromStorage;
+startQuiz.addEventListener('click', function(event) {
+    event.preventDefault(); 
+    questionsFromStorage = JSON.parse(localStorage.getItem("questions"));
+    console.log(questionsFromStorage);
+
+})
 //2.  Get number of questions from the local storage.
 //3.  Multiply the number by 30 seconds.
 //4.  Set timer to the result from step 3 and start counting down.
