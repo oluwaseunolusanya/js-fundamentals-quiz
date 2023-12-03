@@ -8,6 +8,10 @@ let questions = {
         '<javascript>'
     ],
     answer: '<script>'
-}
+};
 //2. Load questions to local storage when start button is clicked.
-let startButton = document.querySelector()
+let startButton = document.querySelector('#submit');
+startButton.addEventListener('click', function(event) {
+    event.preventDefault();  
+    localStorage.setItem("questions", JSON.stringify(questions));
+})
