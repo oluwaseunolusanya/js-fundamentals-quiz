@@ -1,15 +1,36 @@
 //Get number of questions from the local storage and multiply by 30 seconds.
-let timelimit = parseInt(localStorage.getItem("totalQuestions"));
-timelimit *= 30;
+let timerlimit = parseInt(localStorage.getItem("totalQuestions"));
+timerlimit *= 30;
 
 //Set timer to the result from step 3 and start counting down.
-let timer = document.querySelector("#time");
+let timerElement = document.querySelector("#time");
+let timer;
+let isQuizCompleted = false
+function startTimer() {
+    // Sets timer
+    timer = setInterval(function() {
+        timerlimit--;
+        timerElement.textContent = timerlimit;
+        if (timerlimit >= 0) {
+            // Tests if all questions are answered
+            if (isQuizCompleted && timerlimit > 0) {
+                // Clears interval and stops timer
+                clearInterval(timer);
+            }
+        }
+        // Tests if time has run out
+        if (timerlimit === 0) {
+            // Clears interval
+            clearInterval(timer);
+        }
+    }, 1000);
+}
 
 //Add a 'click' eventlistener to the start button.
 let questionsFromStorage = JSON.parse(localStorage.getItem("questions"));
 let firstQuestionKey = Object.keys(questionsFromStorage)[0];
 let firstQuestion = questionsFromStorage.firstQuestionKey;
-console.log(firstQuestion);
+// console.log(firstQuestion);
 
 //Hide the start screen and load the first question from memory.
 let startScreen = document.querySelector("#start-screen");
@@ -18,10 +39,11 @@ let questionsSectionHeading = document.querySelector("#question-title");
 
 startQuiz.addEventListener('click', function(event) {
     event.preventDefault(); 
-    timer.textContent = timelimit;
+    timerElement.textContent = timerlimit;
     startScreen.setAttribute("class", "hide");
     questionsSection.setAttribute("class", "start")
     questionsSectionHeading.textContent = firstQuestion;
+    startTimer();
 })
 
 //5.  Get the first question from local storage.
