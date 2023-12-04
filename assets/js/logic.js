@@ -1,6 +1,5 @@
 //Get number of questions from the local storage and multiply by 30 seconds.
-let timerlimit = parseInt(localStorage.getItem("totalQuestions"));
-timerlimit *= 30;
+let timerlimit = totalQuestions * 30;
 
 //Set timer to the result from step 3 and start counting down.
 let timerElement = document.querySelector("#time");
@@ -27,22 +26,48 @@ function startTimer() {
 }
 
 //Add a 'click' eventlistener to the start button.
-let questionsFromStorage = JSON.parse(localStorage.getItem("questions"));
-let firstQuestionKey = Object.keys(questionsFromStorage)[0];
-let firstQuestion = questionsFromStorage.firstQuestionKey;
+let firstQuestionKey = Object.keys(questions)[0];
+let firstQuestion = questions[firstQuestionKey]["question"];
 // console.log(firstQuestion);
+
+//Lauch questions
+let launchQuestions = () => {
+    questionsSection.setAttribute("class", "start");
+    let questionCount = 0;
+    let questionAnswered = false;
+    Object.keys(questions).forEach(element => {
+        questionCount++
+        while (!questionAnswered){
+            let question = questions[element]["question"];
+            questionsSectionHeading.textContent = `Question ${questionCount} of ${totalQuestions}:  ${question}`;
+            let questionChoices = document.createElement("ol");
+            questionChoices.setAttribute("type", "A");
+            let choices = questions[element]["choices"];
+            for (let index = 0; index < choices.length; index++) {
+                let choice = choices[index];
+                let li = document.createElement("li");
+                li.textContent = choice;
+                questionChoices.appendChild(li);
+                questionDiv.appendChild(questionChoices)                
+            };
+
+            questionAnswered = true;
+        };
+    });
+};
 
 //Hide the start screen and load the first question from memory.
 let startScreen = document.querySelector("#start-screen");
 let questionsSection = document.querySelector("#questions");
 let questionsSectionHeading = document.querySelector("#question-title");
+let questionDiv = document.querySelector('#choices');
+let startQuiz = document.querySelector("#start");
 
-startQuiz.addEventListener('click', function(event) {
+startQuiz.addEventListener("click", function(event) {
     event.preventDefault(); 
     timerElement.textContent = timerlimit;
     startScreen.setAttribute("class", "hide");
-    questionsSection.setAttribute("class", "start")
-    questionsSectionHeading.textContent = firstQuestion;
+    launchQuestions();
     startTimer();
 })
 
