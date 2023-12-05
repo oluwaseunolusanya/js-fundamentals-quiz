@@ -17,6 +17,9 @@ N/A
 ## Usage
 Navigate to this https://oluwaseunolusanya.github.io/js-fundamentals-quiz/
 
+![image](https://github.com/oluwaseunolusanya/js-fundamentals-quiz/assets/26019734/4a2389c7-4ecf-4363-bad1-40435baa167e)
+
+
 
 ## Credits
 Oluwaseun Olusanya
